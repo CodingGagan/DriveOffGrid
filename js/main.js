@@ -103,40 +103,104 @@
     // Testimonials Slider Navigation
     // ============================================
     const testimonialsSlider = document.querySelector('.testimonials-slider');
+    const testimonialsSliderWrapper = document.querySelector('.testimonials-slider-wrapper');
     const prevButton = document.querySelector('.nav-arrow-left');
     const nextButton = document.querySelector('.nav-arrow-right');
 
-    if (testimonialsSlider && prevButton && nextButton) {
-        let scrollAmount = 0;
-        const cardWidth = 300; // Approximate card width + gap
-        const maxScroll = testimonialsSlider.scrollWidth - testimonialsSlider.clientWidth;
+    if (testimonialsSlider && testimonialsSliderWrapper && prevButton && nextButton) {
+        let currentSlide = 0;
+        let isTransitioning = false;
+        const cards = Array.from(testimonialsSlider.querySelectorAll('.testimonial-card'));
+        const totalCards = cards.length;
+        const cardsPerSlide = 4; // 2x2 grid = 4 cards per slide
+        const totalSlides = Math.ceil(totalCards / cardsPerSlide);
 
-        nextButton.addEventListener('click', function() {
-            scrollAmount += cardWidth;
-            if (scrollAmount > maxScroll) {
-                scrollAmount = maxScroll;
+        // Make sure all cards are visible
+        cards.forEach(card => {
+            card.style.display = 'block';
+        });
+
+        function getWrapperWidth() {
+            return testimonialsSliderWrapper.offsetWidth || testimonialsSliderWrapper.clientWidth;
+        }
+
+        function updateSlider() {
+            const wrapperWidth = getWrapperWidth();
+            if (wrapperWidth === 0) {
+                // Retry if width is not available yet
+                setTimeout(updateSlider, 50);
+                return;
             }
-            testimonialsSlider.scrollTo({
-                left: scrollAmount,
-                behavior: 'smooth'
-            });
-        });
+            
+            // Each slide shows 4 cards (2 rows x 2 columns)
+            // Since 2 cards per row = 100% width, each slide = wrapperWidth
+            const translateX = -(currentSlide * wrapperWidth);
+            testimonialsSlider.style.transform = `translateX(${translateX}px)`;
+        }
 
-        prevButton.addEventListener('click', function() {
-            scrollAmount -= cardWidth;
-            if (scrollAmount < 0) {
-                scrollAmount = 0;
+        function handleNext(e) {
+            if (e) e.preventDefault();
+            if (isTransitioning) return;
+            
+            isTransitioning = true;
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+            } else {
+                // Loop back to start
+                currentSlide = 0;
             }
-            testimonialsSlider.scrollTo({
-                left: scrollAmount,
-                behavior: 'smooth'
-            });
+            updateSlider();
+            
+            // Reset transition lock after animation
+            setTimeout(function() {
+                isTransitioning = false;
+            }, 600);
+        }
+
+        function handlePrev(e) {
+            if (e) e.preventDefault();
+            if (isTransitioning) return;
+            
+            isTransitioning = true;
+            if (currentSlide > 0) {
+                currentSlide--;
+            } else {
+                // Loop to end
+                currentSlide = totalSlides - 1;
+            }
+            updateSlider();
+            
+            // Reset transition lock after animation
+            setTimeout(function() {
+                isTransitioning = false;
+            }, 600);
+        }
+
+        // Add event listeners (using once: false so they work every time)
+        nextButton.addEventListener('click', handleNext);
+        prevButton.addEventListener('click', handlePrev);
+
+        // Handle window resize
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                updateSlider();
+            }, 250);
         });
 
-        // Update scroll position on scroll
-        testimonialsSlider.addEventListener('scroll', function() {
-            scrollAmount = this.scrollLeft;
-        });
+        // Initialize
+        function init() {
+            setTimeout(function() {
+                updateSlider();
+            }, 200);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     }
 
     // ============================================
