@@ -1,0 +1,43 @@
+RewriteEngine On
+
+# Remove .php extension from URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Custom URLs for memories pages
+RewriteRule ^poland/memories/?$ memories.php?dest=poland [L,QSA]
+RewriteRule ^ireland/memories/?$ memories.php?dest=ireland [L,QSA]
+RewriteRule ^norway/memories/?$ memories.php?dest=norway [L,QSA]
+RewriteRule ^oman/memories/?$ memories.php?dest=oman [L,QSA]
+RewriteRule ^scotland/memories/?$ memories.php?dest=scotland [L,QSA]
+RewriteRule ^srilanka/memories/?$ memories.php?dest=srilanka [L,QSA]
+RewriteRule ^uae-oman/memories/?$ memories.php?dest=uae_and_oman [L,QSA]
+RewriteRule ^russia-artic/memories/?$ memories.php?dest=russia_artic [L,QSA]
+RewriteRule ^russia-arctic/memories/?$ memories.php?dest=russia_artic [L,QSA]
+RewriteRule ^russia-luxe/memories/?$ memories.php?dest=russia_luxe_corridor [L,QSA]
+RewriteRule ^russia-luxury/memories/?$ memories.php?dest=russia_luxe_corridor [L,QSA]
+
+# Custom URLs for destinations
+RewriteRule ^poland/?$ destination.php?dest=poland [L,QSA]
+RewriteRule ^ireland/?$ destination.php?dest=ireland [L,QSA]
+RewriteRule ^norway/?$ destination.php?dest=norway [L,QSA]
+RewriteRule ^oman/?$ destination.php?dest=oman [L,QSA]
+RewriteRule ^scotland/?$ destination.php?dest=scotland [L,QSA]
+RewriteRule ^srilanka/?$ destination.php?dest=srilanka [L,QSA]
+RewriteRule ^uae-oman/?$ destination.php?dest=uae_and_oman [L,QSA]
+RewriteRule ^ireland-scotland/?$ destination.php?dest=ireland_scotland [L,QSA]
+RewriteRule ^russia-artic/?$ destination.php?dest=russia_artic [L,QSA]
+RewriteRule ^russia-arctic/?$ destination.php?dest=russia_artic [L,QSA]
+RewriteRule ^russia-luxe/?$ destination.php?dest=russia_luxe_corridor [L,QSA]
+RewriteRule ^russia-luxury/?$ destination.php?dest=russia_luxe_corridor [L,QSA]
+
+# Redirect .php to clean URL (except API endpoints)
+RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
+RewriteCond %{REQUEST_URI} !api/ [NC]
+RewriteRule ^ %1? [NC,L,R=301]
+
+# Prevent direct access to .php files (optional - comment out if you want direct access)
+# RewriteCond %{THE_REQUEST} \s/+(.+)\.php[\s?] [NC]
+# RewriteRule ^ /%1 [R=301,L]
+
