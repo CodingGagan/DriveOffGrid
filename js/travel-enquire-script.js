@@ -4,6 +4,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const successOverlay = document.getElementById('successOverlay');
     const closeSuccess = document.getElementById('closeSuccess');
     
+    // Set minimum date for travel month input (next month)
+    const travelMonthInput = document.getElementById('travelMonth');
+    if (travelMonthInput) {
+        const today = new Date();
+        const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+        const year = nextMonth.getFullYear();
+        const month = String(nextMonth.getMonth() + 1).padStart(2, '0');
+        const minDate = `${year}-${month}`;
+        travelMonthInput.setAttribute('min', minDate);
+    }
+    
+    // Clear custom countries textbox on page load/refresh
+    const customCountriesFieldInit = document.getElementById('customCountries');
+    const customCountriesInputInit = document.getElementById('customCountriesInput');
+    if (customCountriesFieldInit) {
+        customCountriesFieldInit.value = '';
+        customCountriesFieldInit.classList.remove('has-value');
+    }
+    if (customCountriesInputInit) {
+        customCountriesInputInit.style.display = 'none';
+    }
+    
     // Generate unique form session ID for tracking this form submission
     function generateFormSessionId() {
         return 'form_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -124,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let previousPolygon;
     let selectedCountries = []; // Track multiple selected countries {code, name}
     let selectedCountryPolygons = {}; // Track polygon objects for selected countries
+    let selectedTrips = []; // Track selected trip values (e.g., 'ireland', 'ireland-scotland') separately from country codes
     
     // Destination to country code mapping with coordinates
     const destinations = {
@@ -154,6 +177,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function initMap() {
         // Create root element
         root = am5.Root.new("chartdiv");
+        
+        // Initially disable map interactions since we start on step 1
+        // This will be enabled when user reaches step 2
 
         // Set themes
         root.setThemes([
@@ -161,15 +187,16 @@ document.addEventListener('DOMContentLoaded', function() {
         ]);
 
         // Create the map chart
+        // Initially disable interactions (will be enabled in step 2)
         chart = root.container.children.push(am5map.MapChart.new(root, {
-            panX: "rotateX",
-            panY: "rotateY",
+            panX: "none",
+            panY: "none",
             projection: am5map.geoOrthographic(),
             paddingBottom: 20,
             paddingTop: 20,
             paddingLeft: 20,
             paddingRight: 20,
-            wheelY: "zoom"
+            wheelY: "none"
         }));
 
         // Create main polygon series for countries
@@ -237,7 +264,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     var countryName = dataItem.get("name") || countryId;
                     
                     // Set up click handler for each polygon using pointertap
+                    // Only allow interaction when on step 2
                     polygon.events.on("pointertap", function(ev) {
+                        // Prevent interaction if not on step 2
+                        if (currentStep !== 2) {
+                            if (ev.originalEvent) {
+                                ev.originalEvent.stopPropagation();
+                                ev.originalEvent.preventDefault();
+                            }
+                            return false;
+                        }
+                        
                         console.log('Polygon tapped - Country:', countryId, countryName);
                         if (ev.originalEvent) {
                             ev.originalEvent.stopPropagation();
@@ -608,7 +645,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (selectedOptions.length === 1) {
             dropdownPlaceholder.style.display = 'none';
             dropdownValue.style.display = 'block';
-            dropdownValue.textContent = selectedOptions[0].textContent;
+            // Use the actual selected option text, not from country code mapping
+            dropdownValue.textContent = selectedOptions[0].textContent.trim();
         } else {
             dropdownPlaceholder.style.display = 'none';
             dropdownValue.style.display = 'block';
@@ -628,7 +666,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             setTimeout(function () {
-                polygonSeries.zoomToDataItem(dataItem);
+                // Use reduced zoom level (0.2 = 20% zoom instead of default 100%)
+                // This provides a subtle zoom that shows the country with plenty of surrounding context
+                polygonSeries.zoomToDataItem(dataItem, 0.2);
             }, 1500);
         }
     }
@@ -678,26 +718,33 @@ document.addEventListener('DOMContentLoaded', function() {
             const option = document.querySelector(`.dropdown-option[data-value="${tripValue}"]`);
             const isOptionSelected = option && option.classList.contains('selected');
             
+            // Track selected trips separately
+            const tripIndex = selectedTrips.indexOf(tripValue);
+            if (isOptionSelected && tripIndex === -1) {
+                // Add to selected trips
+                selectedTrips.push(tripValue);
+            } else if (!isOptionSelected && tripIndex > -1) {
+                // Remove from selected trips
+                selectedTrips.splice(tripIndex, 1);
+            }
+            
             // Check if country is already selected on globe
             var isCountrySelected = selectedCountries.some(c => c.code === destination.countryCode);
             
-            if (isOptionSelected && !isCountrySelected) {
-                // Option is selected but country is not - select it on globe
+            // Check if any trip with this country code is selected
+            const hasAnyTripSelected = selectedTrips.some(trip => {
+                const tripDest = destinations[trip];
+                return tripDest && tripDest.countryCode === destination.countryCode;
+            });
+            
+            if (hasAnyTripSelected && !isCountrySelected) {
+                // At least one trip for this country is selected but country is not - select it on globe
                 toggleCountrySelection(destination.countryCode, countryName, polygon);
                 // Zoom to the country
-        selectCountry(destination.countryCode);
-            } else if (!isOptionSelected && isCountrySelected) {
-                // Option is unselected - check if all dropdown options for this country are unselected
-                const matchingDropdownValues = countryCodeToDropdownValues[destination.countryCode] || [];
-                const hasSelectedDropdownOption = matchingDropdownValues.some(val => {
-                    const opt = document.querySelector(`.dropdown-option[data-value="${val}"]`);
-                    return opt && opt.classList.contains('selected');
-                });
-                
-                if (!hasSelectedDropdownOption) {
-                    // All dropdown options for this country are unselected, so deselect on globe
-                    toggleCountrySelection(destination.countryCode, countryName, polygon);
-                }
+                selectCountry(destination.countryCode);
+            } else if (!hasAnyTripSelected && isCountrySelected) {
+                // No trips for this country are selected, so deselect on globe
+                toggleCountrySelection(destination.countryCode, countryName, polygon);
             }
         }
     }
@@ -707,7 +754,37 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedCountriesContainer = document.getElementById('selectedCountriesContainer');
         if (!selectedCountriesContainer) return;
         
-        // Update hidden input with selected countries
+        // Get custom countries from textbox (only count actual countries typed, not "Other" option)
+        const customCountriesField = document.getElementById('customCountries');
+        let customCountries = [];
+        if (customCountriesField && customCountriesField.value.trim()) {
+            // Split by comma and clean up each country name
+            customCountries = customCountriesField.value
+                .split(',')
+                .map(country => country.trim())
+                .filter(country => country.length > 0);
+        }
+        
+        // Count predefined countries (from globe/dropdown) - exclude "other" from count
+        const predefinedCount = selectedCountries.length;
+        
+        // Count custom countries (from textbox)
+        const customCount = customCountries.length;
+        
+        // Total count = predefined countries + custom countries (NOT including "Other" option)
+        const totalCount = predefinedCount + customCount;
+        
+        // Combine selected countries from globe/dropdown with custom countries for display
+        const allCountries = [...selectedCountries];
+        customCountries.forEach((countryName, index) => {
+            allCountries.push({
+                code: 'CUSTOM_' + index,
+                name: countryName,
+                isCustom: true
+            });
+        });
+        
+        // Update hidden input with all countries
         let selectedCountriesInput = document.getElementById('selectedCountries');
         if (!selectedCountriesInput) {
             selectedCountriesInput = document.createElement('input');
@@ -716,14 +793,27 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedCountriesInput.name = 'selectedCountries';
             enquiryForm.appendChild(selectedCountriesInput);
         }
-        selectedCountriesInput.value = JSON.stringify(selectedCountries);
+        selectedCountriesInput.value = JSON.stringify(allCountries);
         
-        if (selectedCountries.length === 0) {
+        if (totalCount === 0) {
             selectedCountriesContainer.innerHTML = '<p class="no-selection">No countries selected. Click on the globe or choose from dropdown.</p>';
             return;
         }
         
-        let html = '<div class="selected-countries-list">';
+        // Build count display showing breakdown
+        let countText = `Total: ${totalCount} ${totalCount === 1 ? 'country' : 'countries'} selected`;
+        if (predefinedCount > 0 && customCount > 0) {
+            countText = `Total: ${totalCount} ${totalCount === 1 ? 'country' : 'countries'} selected (${predefinedCount} predefined + ${customCount} custom)`;
+        } else if (predefinedCount > 0) {
+            countText = `Total: ${predefinedCount} ${predefinedCount === 1 ? 'country' : 'countries'} selected`;
+        } else if (customCount > 0) {
+            countText = `Total: ${customCount} ${customCount === 1 ? 'country' : 'countries'} selected`;
+        }
+        
+        let html = `<div class="selected-countries-header"><p class="countries-count">${countText}</p></div>`;
+        html += '<div class="selected-countries-list">';
+        
+        // Display countries from globe/dropdown
         selectedCountries.forEach((country, index) => {
             html += `
                 <div class="selected-country-item" data-code="${country.code}">
@@ -736,11 +826,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         });
+        
+        // Display custom countries
+        customCountries.forEach((countryName, index) => {
+            const customCode = 'CUSTOM_' + index;
+            html += `
+                <div class="selected-country-item custom-country" data-code="${customCode}">
+                    <span class="country-name">${countryName}</span>
+                    <button type="button" class="remove-country remove-custom-country" data-code="${customCode}" data-country-name="${countryName}" aria-label="Remove ${countryName}">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+        });
+        
         html += '</div>';
         selectedCountriesContainer.innerHTML = html;
         
-        // Add event listeners for remove buttons
-        selectedCountriesContainer.querySelectorAll('.remove-country').forEach(btn => {
+        // Add event listeners for remove buttons (globe/dropdown countries)
+        selectedCountriesContainer.querySelectorAll('.remove-country:not(.remove-custom-country)').forEach(btn => {
             btn.addEventListener('click', function() {
                 const code = this.getAttribute('data-code');
                 const polygon = selectedCountryPolygons[code];
@@ -748,6 +854,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     var dataItem = polygon.dataItem;
                     var countryName = dataItem ? dataItem.get("name") : code;
                     toggleCountrySelection(code, countryName, polygon);
+                }
+            });
+        });
+        
+        // Add event listeners for remove buttons (custom countries)
+        selectedCountriesContainer.querySelectorAll('.remove-custom-country').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const countryName = this.getAttribute('data-country-name');
+                if (customCountriesField) {
+                    // Remove the country from the textbox
+                    let currentCountries = customCountriesField.value
+                        .split(',')
+                        .map(c => c.trim())
+                        .filter(c => c.length > 0 && c !== countryName);
+                    customCountriesField.value = currentCountries.join(', ');
+                    
+                    // Update has-value class
+                    if (currentCountries.length === 0) {
+                        customCountriesField.classList.remove('has-value');
+                    }
+                    
+                    // Trigger update to refresh display
+                    updateStep2SelectedCountries();
                 }
             });
         });
@@ -802,6 +931,31 @@ document.addEventListener('DOMContentLoaded', function() {
         
         currentStep = step;
         updateStepIndicator();
+        
+        // Show/hide map lock overlay based on current step
+        const mapLockOverlay = document.getElementById('mapLockOverlay');
+        if (mapLockOverlay) {
+            if (step === 1) {
+                mapLockOverlay.classList.remove('hidden');
+            } else if (step === 2) {
+                mapLockOverlay.classList.add('hidden');
+            }
+        }
+        
+        // Disable/enable map interactions based on step
+        if (chart) {
+            if (step === 1) {
+                // Disable map interactions
+                chart.set('wheelY', 'none');
+                chart.set('panX', 'none');
+                chart.set('panY', 'none');
+            } else if (step === 2) {
+                // Enable map interactions
+                chart.set('wheelY', 'zoom');
+                chart.set('panX', 'rotateX');
+                chart.set('panY', 'rotateY');
+            }
+        }
     }
     
     function validateStep1() {
@@ -811,8 +965,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let isValid = true;
         
-        // Validate each field
-        [firstName, email, phone].forEach(input => {
+        // Validate required fields (firstName and phone are required, email is optional)
+        [firstName, phone].forEach(input => {
             if (!input.value.trim()) {
                 isValid = false;
                 input.parentElement.classList.add('error');
@@ -824,14 +978,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Email validation
+        // Email validation - only validate format if email is provided (optional field)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (email.value && !emailRegex.test(email.value)) {
+        if (email.value && email.value.trim() && !emailRegex.test(email.value)) {
             isValid = false;
             email.parentElement.classList.add('error');
             setTimeout(() => {
                 email.parentElement.classList.remove('error');
             }, 1000);
+        } else if (email.value && email.value.trim()) {
+            // Clear error if email is valid
+            email.parentElement.classList.remove('error');
         }
         
         return isValid;
@@ -895,12 +1052,62 @@ document.addEventListener('DOMContentLoaded', function() {
         option.addEventListener('click', function(e) {
             e.stopPropagation();
             const value = this.getAttribute('data-value');
+            const isOther = value === 'other';
             
             // Toggle selected class on option
+            const isNowSelected = !this.classList.contains('selected');
             this.classList.toggle('selected');
             
-            // Update map marker - this will toggle the country selection
-            updateMapMarker(value);
+            // Track selected trips
+            if (isNowSelected) {
+                if (selectedTrips.indexOf(value) === -1) {
+                    selectedTrips.push(value);
+                }
+            } else {
+                const tripIndex = selectedTrips.indexOf(value);
+                if (tripIndex > -1) {
+                    selectedTrips.splice(tripIndex, 1);
+                }
+            }
+            
+            // Show/hide custom countries input based on "Other" selection
+            const customCountriesInput = document.getElementById('customCountriesInput');
+            const customCountriesField = document.getElementById('customCountries');
+            const hasOtherSelected = selectedTrips.indexOf('other') > -1;
+            
+            if (customCountriesInput && customCountriesField) {
+                if (hasOtherSelected) {
+                    // If "Other" is selected, show the input
+                    customCountriesInput.style.display = 'block';
+                    
+                    // Clear textbox when "Other" is clicked (whether selecting or re-selecting)
+                    if (isOther) {
+                        customCountriesField.value = '';
+                        customCountriesField.classList.remove('has-value');
+                        // Update display to reflect cleared textbox
+                        updateStep2SelectedCountries();
+                    }
+                    
+                    // Focus on the textarea after a short delay
+                    setTimeout(() => {
+                        if (customCountriesField) {
+                            customCountriesField.focus();
+                        }
+                    }, 100);
+                } else {
+                    // If "Other" is deselected, hide and clear the input
+                    customCountriesInput.style.display = 'none';
+                    customCountriesField.value = '';
+                    customCountriesField.classList.remove('has-value');
+                    // Update display to reflect cleared textbox
+                    updateStep2SelectedCountries();
+                }
+            }
+            
+            // Update map marker - this will toggle the country selection (skip for "other")
+            if (!isOther) {
+                updateMapMarker(value);
+            }
             
             // Update dropdown display
             updateDropdownDisplay();
@@ -945,7 +1152,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Form input animations
-    const inputs = enquiryForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="month"], textarea');
+    const inputs = enquiryForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="month"], textarea, #customCountries');
     
     inputs.forEach(input => {
         // Check if input has value on load
@@ -999,6 +1206,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Special handling for custom countries textarea - update display in real-time
+    const customCountriesField = document.getElementById('customCountries');
+    if (customCountriesField) {
+        customCountriesField.addEventListener('input', function() {
+            // Update the selected countries display when user types
+            updateStep2SelectedCountries();
+        });
+        
+        customCountriesField.addEventListener('blur', function() {
+            // Save custom countries to database
+            if (this.value.trim()) {
+                saveField('customCountries', this.value.trim());
+            }
+        });
+    }
 
     // Phone number formatting
     const phoneInput = document.getElementById('phone');
@@ -1100,12 +1323,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedTripValues = Array.from(selectedDropdownOptions).map(opt => opt.getAttribute('data-value'));
         
         // Prepare form data for submission
+        const customCountriesField = document.getElementById('customCountries');
+        const customCountries = customCountriesField ? customCountriesField.value.trim() : '';
+        
         const formData = {
             firstName: document.getElementById('firstName').value,
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value.replace(/\D/g, ''), // Clean phone number
             tripType: JSON.stringify(selectedTripValues),
             selectedCountries: JSON.stringify(selectedCountries),
+            customCountries: customCountries,
             numberOfPeople: parseInt(document.getElementById('numberOfPeople').value) || null,
             travelMonth: document.getElementById('travelMonth').value,
             message: document.getElementById('message').value
@@ -1232,6 +1459,17 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdownWrapper.classList.remove('has-value');
             customDropdown.classList.remove('active');
             
+            // Reset custom countries input
+            const customCountriesInput = document.getElementById('customCountriesInput');
+            const customCountriesField = document.getElementById('customCountries');
+            if (customCountriesInput) {
+                customCountriesInput.style.display = 'none';
+            }
+            if (customCountriesField) {
+                customCountriesField.value = '';
+                customCountriesField.classList.remove('has-value');
+            }
+            
             // Reset step 2 fields
             const numberOfPeopleInput = document.getElementById('numberOfPeople');
             const travelMonthInput = document.getElementById('travelMonth');
@@ -1247,9 +1485,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 previousPolygon = null;
             }
             
-            // Reset selected countries
+            // Reset selected countries and trips
             selectedCountries = [];
             selectedCountryPolygons = {};
+            selectedTrips = [];
             
             // Generate new form session ID for next submission
             formSessionId = generateFormSessionId();
@@ -1381,11 +1620,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize globe when AmCharts is ready
     if (typeof am5 !== 'undefined' && typeof am5map !== 'undefined') {
         initMap();
+        // Set initial lock overlay state (step 1 is active by default)
+        const mapLockOverlay = document.getElementById('mapLockOverlay');
+        if (mapLockOverlay && currentStep === 1) {
+            mapLockOverlay.classList.remove('hidden');
+        }
     } else {
         // Wait for libraries to load
         setTimeout(() => {
             if (typeof am5 !== 'undefined' && typeof am5map !== 'undefined') {
                 initMap();
+                // Set initial lock overlay state (step 1 is active by default)
+                const mapLockOverlay = document.getElementById('mapLockOverlay');
+                if (mapLockOverlay && currentStep === 1) {
+                    mapLockOverlay.classList.remove('hidden');
+                }
             }
         }, 500);
     }

@@ -46,8 +46,8 @@ include 'includes/header.php';
                         </div>
 
                         <div class="form-group">
-                            <input type="email" id="email" name="email" required>
-                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email">
+                            <label for="email">Email Address (Optional)</label>
                             <div class="input-underline"></div>
                         </div>
 
@@ -79,7 +79,7 @@ include 'includes/header.php';
                             <input type="hidden" id="tripType" name="tripType">
                             <div class="custom-dropdown" id="customDropdown">
                                 <div class="custom-dropdown-selected">
-                                    <span class="dropdown-placeholder">Choose Your Trip (Optional)</span>
+                                    <span class="dropdown-placeholder">Choose Your Trip</span>
                                     <span class="dropdown-value"></span>
                                 </div>
                                 <div class="custom-dropdown-arrow">
@@ -96,16 +96,28 @@ include 'includes/header.php';
                                     <div class="dropdown-option" data-value="srilanka" data-location="[80.7718, 7.8731]" data-name="Sri Lanka">Sri Lanka</div>
                                     <div class="dropdown-option" data-value="uae-oman" data-location="[54.3773, 24.4539]" data-name="UAE & Oman">UAE & Oman</div>
                                     <div class="dropdown-option" data-value="ireland-scotland" data-location="[-4.2766, 54.7024]" data-name="Ireland & Scotland">Ireland & Scotland</div>
+                                    <div class="dropdown-option" data-value="russia-artic" data-location="[37.6173, 55.7558]" data-name="Russia Arctic">Russia Arctic</div>
+                                    <div class="dropdown-option" data-value="russia-luxe" data-location="[37.6173, 55.7558]" data-name="Russia Luxe">Russia Luxe</div>
+                                    <div class="dropdown-option" data-value="other" data-location="[0, 0]" data-name="Other">Other</div>
                                 </div>
                             </div>
-                            <label for="tripType">Choose Your Trip (Optional)</label>
+                            <label for="tripType">Choose Your Trip</label>
                             <div class="input-underline"></div>
+                        </div>
+
+                        <!-- Custom Countries Input - Shows when "Other" is selected -->
+                        <div class="form-group custom-countries-input" id="customCountriesInput" style="display: none;">
+                            <textarea id="customCountries" name="customCountries" rows="3" placeholder="Enter your desired countries (e.g., France, Italy, Spain)"></textarea>
+                            <label for="customCountries">Enter Your Desired Countries</label>
+                            <div class="input-underline"></div>
+                            <span class="helper-text">Separate multiple countries with commas</span>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <input type="number" id="numberOfPeople" name="numberOfPeople" min="6" required>
-                                <label for="numberOfPeople">Number of people in your group (Minimum 6)</label>
+                                <label for="numberOfPeople">Number of people in your group</label>
+                                <span class="helper-text">(Minimum 6)</span>
                                 <div class="input-underline"></div>
                             </div>
 
@@ -118,7 +130,7 @@ include 'includes/header.php';
 
                         <div class="form-group">
                             <textarea id="message" name="message" rows="4" required></textarea>
-                            <label for="message">Tell us more about how you’d like the drive</label>
+                            <label for="message">Describe the drive you'd like to bring to life</label>
                             <div class="input-underline"></div>
                         </div>
 
@@ -153,6 +165,19 @@ include 'includes/header.php';
             </div>
             <div class="map-overlay"></div>
             <div id="chartdiv" class="globe-map"></div>
+            <!-- Lock Overlay - Shows when step 1 is active -->
+            <div class="map-lock-overlay" id="mapLockOverlay">
+                <div class="lock-content">
+                    <div class="lock-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 11H5C3.89543 11 3 11.8954 3 13V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V13C21 11.8954 20.1046 11 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Complete Step 1 to Unlock</h3>
+                    <p>Fill in your details first to explore the globe</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -182,40 +207,7 @@ include 'includes/header.php';
         </div>
     </div>
 
-    <!-- Contact Info Section -->
-    <div class="contact-info">
-        <div class="info-card">
-            <div class="info-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <h3>Visit Us</h3>
-            <p>C-20, G Block, Near MCA<br>Bandra Kurla Complex, Bandra (East)<br>Mumbai - 400051</p>
-        </div>
-
-        <div class="info-card">
-            <div class="info-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7292C21.7209 20.9841 21.5573 21.2126 21.3518 21.3999C21.1463 21.5872 20.9033 21.7293 20.6391 21.8167C20.3749 21.9041 20.0955 21.9351 19.82 21.9077C16.7428 21.4986 13.787 20.4471 11.19 18.8377C8.77382 17.4017 6.72533 15.3522 5.29001 12.935C3.67995 10.3373 2.62824 7.38031 2.22 4.302C2.19262 4.02659 2.22364 3.74726 2.31101 3.48319C2.39838 3.21912 2.54038 2.97626 2.72764 2.77089C2.9149 2.56552 3.14337 2.40208 3.39831 2.29064C3.65325 2.1792 3.92892 2.12228 4.20732 2.12345H7.20732C7.68197 2.12054 8.13755 2.30657 8.47732 2.64345C8.81709 2.98033 9.01526 3.44312 9.02732 3.92745C9.17244 5.05919 9.45672 6.16981 9.87232 7.23245C10.0079 7.60364 10.0761 8.00018 10.0723 8.39945C10.0685 8.79872 9.9929 9.19359 9.84932 9.56245L8.38932 12.9525C10.1019 15.6252 12.3748 17.8981 15.0473 19.6105L18.4373 18.1505C18.8062 18.0069 19.201 17.9313 19.6003 17.9275C19.9996 17.9237 20.3961 17.9919 20.7673 18.1275C21.8299 18.5431 22.9405 18.8274 24.0723 18.9725C24.5582 18.9845 25.0224 19.1832 25.3603 19.5235C25.6982 19.8638 25.8842 20.3208 25.8803 20.7975L22.8803 20.7975" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <h3>Call Us</h3>
-            <p><a href="tel:+919323167788">+91-9323167788</a></p>
-        </div>
-
-        <div class="info-card">
-            <div class="info-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <h3>Email Us</h3>
-            <p><a href="mailto:hello@driveoffgrid.com">hello@driveoffgrid.com</a></p>
-        </div>
-    </div>
+ 
 
     <!-- Pass base path to JavaScript -->
     <script>

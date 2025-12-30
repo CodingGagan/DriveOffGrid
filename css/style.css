@@ -597,7 +597,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     color: #fff;
     margin-bottom: 1.5rem;
     line-height: 1.8;
-    font-size: 1rem;
+    font-size: 1.5rem;
     opacity: 1;
     font-family: "Inter", sans-serif;
 }
@@ -605,7 +605,7 @@ h1, h2,h3,h4,h5,h5,h6 {
 .card-ethos {
     color: var(--primary-color);
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     margin-bottom: 2rem;
     font-family: "Poppins", sans-serif;
     text-transform: none;
@@ -657,7 +657,7 @@ h1, h2,h3,h4,h5,h5,h6 {
 }
 
 .section-title {
-    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
     color: var(--text-dark);
     margin-bottom: 2.5rem;
@@ -842,8 +842,8 @@ h1, h2,h3,h4,h5,h5,h6 {
     }
 
     .plan-journey-title {
-        font-size: clamp(1.75rem, 6vw, 2.5rem);
-        margin-bottom: 2rem;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin-top: 2rem;
     }
 
     .journey-cta-btn {
@@ -897,7 +897,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     }
     
     .destination-country {
-        font-size: 0.9rem;
+        font-size: 1.2rem;
     }
     
     .destination-description {
@@ -916,7 +916,7 @@ h1, h2,h3,h4,h5,h5,h6 {
 }
 
 .memories-title {
-    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
     color: var(--text-dark);
     margin-bottom: 2.5rem;
@@ -1116,13 +1116,13 @@ h1, h2,h3,h4,h5,h5,h6 {
 }
 
 .plan-journey-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
     font-family: "Poppins", sans-serif;
     text-align: center;
     line-height: 1.1;
     color: var(--text-dark);
-    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
     letter-spacing: -0.02em;
 }
 
@@ -1140,33 +1140,22 @@ h1, h2,h3,h4,h5,h5,h6 {
     position: relative;
 }
 
-.plan-journey-cta::after {
-    content: '';
-    position: absolute;
-    bottom: -1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(255, 151, 79, 0.3), transparent);
-}
-
 .journey-cta-btn {
     background: linear-gradient(135deg, #FF974F 0%, #FF8C42 100%);
     color: #fff;
     padding: 1.5rem 4rem;
     border-radius: 50px;
-    font-size: 1.15rem;
+    font-size: 1.4rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-decoration: none;
     display: inline-block;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 
+    /* box-shadow: 
         0 15px 40px rgba(255, 151, 79, 0.4),
         0 5px 15px rgba(255, 151, 79, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        inset 0 1px 0 rgba(255, 255, 255, 0.3); */
     border: none;
     cursor: pointer;
     position: relative;
@@ -1190,10 +1179,10 @@ h1, h2,h3,h4,h5,h5,h6 {
 
 .journey-cta-btn:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 
+    /* box-shadow: 
         0 20px 50px rgba(255, 151, 79, 0.5),
         0 10px 25px rgba(255, 151, 79, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        inset 0 1px 0 rgba(255, 255, 255, 0.4); */
 }
 
 .journey-cta-btn:active {
@@ -1508,8 +1497,8 @@ h1, h2,h3,h4,h5,h5,h6 {
 }
 
 .testimonial-avatar {
-    width: 64px;
-    height: 64px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #ffffff, #d4d4d4);
     margin-bottom: 1.75rem;
@@ -1520,7 +1509,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     color: var(--text-light);
     opacity: 0.85;
     line-height: 1.7;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     margin: 0;
     max-width: 90%;
 }
@@ -1588,7 +1577,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     color: var(--text-dark);
     margin-bottom: 1.5rem;
     line-height: 1.8;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .highlight-text {
@@ -1734,7 +1723,7 @@ h1, h2,h3,h4,h5,h5,h6 {
 
 .footer-title {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 300;
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -1820,6 +1809,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     :root {
         --container-padding: 2rem;
     }
+    
 
     .hero-title {
         font-size: clamp(3rem, 6vw, 4.5rem);
@@ -1834,9 +1824,8 @@ h1, h2,h3,h4,h5,h5,h6 {
         padding: 8rem 0 1.5rem;
     }
 
-    .section-title-white,
-    .section-title {
-        font-size: 3.5rem;
+    .section-title-white {
+        font-size: clamp(2rem, 5vw, 3.5rem);
     }
 
     .proposition-title {
@@ -1850,7 +1839,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     }
 
     .proposition-card {
-        max-width: 900px;
+        max-width: 1200px;
         width: 100%;
     }
 
@@ -1938,7 +1927,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     }
 
     .proposition-card {
-        max-width: 900px;
+        max-width: 1200px;
         width: 100%;
     }
 
@@ -1950,11 +1939,11 @@ h1, h2,h3,h4,h5,h5,h6 {
     }
 
     .plan-journey-title {
-        margin-bottom: 3rem;
+        margin-top: 3rem;
     }
 
     .plan-journey-cta {
-        margin-bottom: 4rem;
+        margin-bottom: 3rem;
     }
 
     .plan-journey-contact-info {
@@ -1974,7 +1963,7 @@ h1, h2,h3,h4,h5,h5,h6 {
     }
 
     .about-text {
-        max-width: 900px;
+        max-width: 1200px;
     }
 
     .memory-card {
@@ -2005,7 +1994,7 @@ h1, h2,h3,h4,h5,h5,h6 {
 
     .section-title-white,
     .section-title {
-        font-size: 3rem;
+        font-size: clamp(2rem, 5vw, 3.5rem);
     }
 }
 
@@ -2126,7 +2115,7 @@ img[loading="lazy"].loaded {
 }
 
 .highlight-text {
-    color: var(--primary-color);
+    color: var(--text-dark);
     font-weight: 600;
     font-family: "Poppins", sans-serif;
 }
@@ -2199,7 +2188,7 @@ img[loading="lazy"].loaded {
 }
 
 .trip-info-title {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--primary-color);
     text-transform: uppercase;
@@ -2209,11 +2198,16 @@ img[loading="lazy"].loaded {
 }
 
 .trip-info-description {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #1A1A1A;
     line-height: 1.6;
     font-family: "Inter", sans-serif;
     margin: 0;
+    font-weight: 500;
+}
+
+.trip-info-customize:nth-child(1) {
+    margin-bottom: 2rem;
 }
 
 .trip-info-customize {
@@ -2227,7 +2221,7 @@ img[loading="lazy"].loaded {
 }
 
 .trip-info-customize p {
-    font-size: 1.1rem;
+    font-size: 2rem;
     font-weight: 600;
     color: var(--green);
     margin: 0;
@@ -2317,13 +2311,13 @@ img[loading="lazy"].loaded {
 }
 
 .itinerary-day-content {
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 0 2rem;
     flex: 1;
     background: #fff;
 }
 
 .itinerary-detail {
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.95rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -2334,8 +2328,8 @@ img[loading="lazy"].loaded {
 }
 
 .itinerary-label {
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: 1.1rem;
+    font-weight: bolder;
     color: var(--primary-color);
     font-family: "Poppins", sans-serif;
     text-transform: uppercase;
@@ -2425,14 +2419,14 @@ img[loading="lazy"].loaded {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--primary-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.95 rem;
     font-family: "Poppins", sans-serif;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .info-box-intro {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #1A1A1A;
     margin-bottom: 1.5rem;
     font-family: "Inter", sans-serif;
@@ -2440,7 +2434,7 @@ img[loading="lazy"].loaded {
 }
 
 .info-box-text {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #1A1A1A;
     line-height: 1.8;
     font-family: "Inter", sans-serif;
@@ -2454,13 +2448,13 @@ img[loading="lazy"].loaded {
 }
 
 .info-box-list li {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #1A1A1A;
     line-height: 1.8;
     font-family: "Inter", sans-serif;
     padding-left: 1.5rem;
     position: relative;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.25rem;
 }
 
 .info-box-list li:before {
@@ -2646,8 +2640,21 @@ img[loading="lazy"].loaded {
         grid-template-columns: repeat(1, 1fr);
     }
 
+    .journey-cta-btn {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+
+    .plan-journey-panel {
+        padding: 2rem;
+    }
+
+    .hero-video-control {
+        top: 4rem;
+    }
+
     .hero {
-        height: 80vh;
+        min-height: 40vh;
     }
 
     .hero-eyebrow {
@@ -2998,7 +3005,7 @@ img[loading="lazy"].loaded {
 }
 
 .step-text p {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1.8;
     margin-bottom: 1.5rem;
     font-family: "Inter", sans-serif;
@@ -3477,6 +3484,23 @@ img[loading="lazy"].loaded {
     
     .memories-hero-video-wrapper {
         padding-bottom: 75%; /* Taller aspect ratio on tablet */
+    }
+
+    .card-text, .card-ethos {
+        font-size: 1rem;
+    }
+
+    .journey-cta-btn {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+
+    .plan-journey-panel {
+        padding: 2rem;
+    }
+
+    .hero {
+        min-height: 60vh;
     }
 }
 

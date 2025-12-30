@@ -185,6 +185,65 @@ body.contact-page .footer {
     background: linear-gradient(to bottom, rgba(10, 10, 15, 0.2) 0%, transparent 20%, transparent 80%, rgba(10, 10, 15, 0.2) 100%);
 }
 
+/* Map Lock Overlay - Prevents interaction until step 2 */
+.map-lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 15, 0);
+    backdrop-filter: blur(3px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    pointer-events: all;
+}
+
+.map-lock-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.lock-content {
+    text-align: center;
+    padding: 40px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.lock-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 30px;
+    color: var(--primary-color);
+    animation: pulse 2s infinite;
+}
+
+.lock-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 5px 15px rgba(255, 151, 79, 0.4));
+}
+
+.lock-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.lock-content p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
 .map-title {
     position: relative;
     padding: 40px 40px 20px 40px;
@@ -352,12 +411,14 @@ body.contact-page .footer {
 
 /* Form Steps */
 .form-step {
-    display: none;
+    display: none !important;
+    flex-direction: column;
+    gap: 25px;
     animation: fadeIn 0.4s ease-in-out;
 }
 
 .form-step.active {
-    display: block;
+    display: flex !important;
 }
 
 @keyframes fadeIn {
@@ -386,6 +447,7 @@ body.contact-page .footer {
 
 .form-group {
     position: relative;
+    margin-bottom: 0;
 }
 
 .form-group input,
@@ -494,6 +556,7 @@ body.contact-page .footer {
     opacity: 1;
     visibility: visible;
     margin-top: 5px;
+    overflow-y: auto;
 }
 
 .dropdown-option {
@@ -522,6 +585,58 @@ body.contact-page .footer {
     font-weight: 500;
 }
 
+.dropdown-option[data-value="other"] {
+    border-top: 1px solid rgba(255, 151, 79, 0.2);
+    margin-top: 5px;
+    padding-top: 18px;
+}
+
+/* Custom Countries Input */
+.custom-countries-input {
+    margin-top: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.custom-countries-input textarea {
+    width: 100%;
+    padding: 16px 0 28px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    outline: none;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.custom-countries-input textarea:focus {
+    border-bottom-color: var(--primary-color);
+}
+
+.custom-countries-input textarea:focus + label,
+.custom-countries-input textarea:valid + label,
+.custom-countries-input textarea.has-value + label {
+    top: -8px;
+    font-size: 0.85rem;
+    color: var(--primary-color);
+}
+
+.custom-countries-input .helper-text {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    pointer-events: none;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    margin-top: 4px;
+    line-height: 1.2;
+}
+
 .form-group textarea {
     resize: none;
     min-height: 100px;
@@ -540,6 +655,21 @@ body.contact-page .footer {
     background: rgba(255, 255, 255, 0.03);
     border-radius: 10px;
     border: 1px dashed rgba(255, 151, 79, 0.2);
+}
+
+.selected-countries-header {
+    margin-bottom: 15px;
+}
+
+.countries-count {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 151, 79, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 151, 79, 0.2);
 }
 
 .selected-countries-list {
@@ -563,6 +693,16 @@ body.contact-page .footer {
     background: rgba(255, 151, 79, 0.15);
     border-color: rgba(255, 151, 79, 0.5);
     transform: translateX(5px);
+}
+
+.selected-country-item.custom-country {
+    background: rgba(255, 179, 102, 0.1);
+    border-color: rgba(255, 179, 102, 0.3);
+}
+
+.selected-country-item.custom-country:hover {
+    background: rgba(255, 179, 102, 0.15);
+    border-color: rgba(255, 179, 102, 0.5);
 }
 
 .country-name {
@@ -605,6 +745,23 @@ body.contact-page .footer {
     font-size: 1rem;
     pointer-events: none;
     transition: all 0.3s ease;
+}
+
+.form-group .helper-text {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    pointer-events: none;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus ~ .helper-text,
+.form-group input.has-value ~ .helper-text,
+.form-group input[type="number"]:not(:placeholder-shown) ~ .helper-text {
+    opacity: 0.5;
 }
 
 .form-group input:focus,

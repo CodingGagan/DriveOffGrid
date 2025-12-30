@@ -787,6 +787,9 @@ include 'includes/header.php';
             <img src="<?php echo isset($dest['background_image']) ? $dest['background_image'] : 'assets/images/homepage/poland_memories_hp.png'; ?>" alt="Background" class="trip-info-bg-image" loading="lazy">
         </div>
         <div class="container">
+            <div class="trip-info-customize">
+                <p>Here are some of the details you can expect</p>
+            </div>
             <div class="trip-info-grid">
                 <?php foreach ($dest['trip_info'] as $info): ?>
                     <div class="trip-info-card">
@@ -799,7 +802,7 @@ include 'includes/header.php';
                 <?php endforeach; ?>
             </div>
             <div class="trip-info-customize">
-                <p>and that's not all ... Everything can be customized</p>
+                <p>and THAT'S NOT ALL...Everything can be customized</p>
             </div>
         </div>
     </section>

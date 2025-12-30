@@ -4,7 +4,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <h3 class="footer-brand-name">DriveOffGrid</h3>
+                        <!-- <h3 class="footer-brand-name">DriveOffGrid</h3> -->
                         <img src="<?php echo url_path('assets/images/Logo/DoG Logo Final 22nd Jan 2024 1.png'); ?>" alt="DriveOffGrid logo" class="footer-logo-image" loading="lazy">
                     </div>
                     <div class="social-links">
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <a href="#terms" class="footer-link">Term Of Condition</a>
+                <a href="#terms" class="footer-link">Terms & Conditions</a>
                 <span class="footer-separator">|</span>
                 <a href="#privacy" class="footer-link">Privacy Policy</a>
             </div>

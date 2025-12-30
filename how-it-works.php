@@ -22,7 +22,7 @@ include 'includes/header.php';
             <div class="step-content">
                 <h2 class="step-title">STEP 1 : You Choose Your Own Group</h2>
                 <div class="step-text">
-                    <p>Journeys take on a different kind of magic when shared with the right people. Bring together friends, family, or colleagues, you choose the company who shares the miles, the moments, and the memories with you. All we need is a <span class="highlight-text">minimum of three cars</span> to start the convoy. We’ll complete it on our own.</p>
+                    <p>Journeys take on a different kind of magic when shared with the right people. Bring together friends, family, or colleagues, you choose the company who shares the miles, the moments, and the memories with you. All we need is a <span class="highlight-text">minimum of three cars</span> to start the convoy. We’ll add our own to complete it.</p>
                     <p>Every DriveOffGrid experience is crafted as a bespoke luxury journey, giving you complete control over the size, tone, and spirit of your drive.</p>
                 </div>
                 <p class="step-highlight">You bring the crew. We’ll bring the expertise. We’ll elevate the experience.</p>

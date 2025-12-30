@@ -58,7 +58,7 @@
             <div class="logo-container">
                 <a href="<?php echo url_path('home'); ?>" class="logo-link" aria-label="Go to homepage">
                     <img src="assets/images/Logo/DoG Logo Final 22nd Jan 2024 1.png" alt="DriveOffGrid logo" class="brand-logo" loading="eager">
-                    <span class="logo-text">driveoffgrid</span>
+                    <!-- <span class="logo-text">driveoffgrid</span> -->
                 </a>
             </div>
             <p class="brand-slogan">We make it happen!</p>

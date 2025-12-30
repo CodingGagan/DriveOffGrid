@@ -129,7 +129,7 @@ uasort($memories, fn($a, $b) => strcasecmp($a['name'], $b['name']));
         </video>
         <!-- <img src="assets/images/homepage/banner-image.png" alt="Scenic mountain bridge landscape" class="hero-image" loading="eager" fetchpriority="high"> -->
     </div>
-    <div class="hero-overlay"></div>
+    <!-- <div class="hero-overlay"></div> -->
     <div class="container">
         <div class="hero-content">
             <h1 class="hero-eyebrow">DriveOffGrid</h1>
@@ -160,12 +160,12 @@ uasort($memories, fn($a, $b) => strcasecmp($a['name'], $b['name']));
             <h2 class="proposition-title section-title">HOW IT WORKS</h2>
             <div class="proposition-card">
                 <p class="card-text">
-                    DriveOffGrid stands for self-drive luxury expeditions that go beyond travel journeys that are about discovery, connection, and freedom.
+                Every DriveOffGrid journey begins with you. Your people, your pace, your destination. We don’t offer fixed itineraries, we craft bespoke self-drive expeditions shaped entirely around how you want to travel.
                 </p>
-                <p class="card-text">
+                <!-- <p class="card-text">
                     Every expedition is personally led by us, the co-founders, no delegation, no outsourcing. We create experiences where travelers rediscover themselves behind the wheel, exploring places far removed from the ordinary tourist circuit.
-                </p>
-                <p class="card-ethos">Our ethos: where luxury meets the open road</p>
+                </p> -->
+                <p class="card-text">The experience unfolds through <span class="card-ethos">four simple, thoughtful steps.</span></p>
                 <a href="how-it-works" class="btn btn-read-more">READ MORE</a>
             </div>
         </div>
@@ -262,9 +262,9 @@ uasort($memories, fn($a, $b) => strcasecmp($a['name'], $b['name']));
     <div class="container plan-journey-container">
         <div class="plan-journey-content">
             <div class="plan-journey-panel">
-                <h2 class="plan-journey-title">Let's Plan <span class="highlight">Your Next Journey</span></h2>
+                <h2 class="plan-journey-title">Let's plan <span class="highlight">your next journey</span></h2>
                 <div class="plan-journey-cta">
-                    <a href="contact_us" class="btn btn-primary journey-cta-btn">REGISTER NOW</a>
+                    <a href="contact_us" class="btn btn-primary journey-cta-btn">REACH OUT</a>
                 </div>
                 <!-- <div class="plan-journey-contact-info">
                     <div class="plan-contact-card">
@@ -558,7 +558,7 @@ uasort($memories, fn($a, $b) => strcasecmp($a['name'], $b['name']));
                 <p class="about-description">
                 This isn't just a travel company, it's a way of life. And when you drive with us, you're not just a guest. <strong class="highlight-text">You're part of our convoy. Part of our story.</strong>
                 </p>
-                <a href="who-we-are">
+                <a href="who-we-are" style="display: block; margin-top: 2rem;">
                 <button class="btn btn-reach-out" style="display: block; margin: auto;">Read more</button>
                 </a>
             </div>
