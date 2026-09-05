@@ -74,5 +74,19 @@ include 'includes/header.php';
         </div>
     </section>
 
+    <!-- Important Disclaimer -->
+    <section class="how-it-works-step step-light how-it-works-disclaimer">
+        <div class="container">
+            <div class="step-content">
+                <h2 class="step-title">IMPORTANT DISCLAIMER</h2>
+                <div class="step-text">
+                    <p>DriveOffGrid journeys are self-drive experiences. Each participant is solely responsible for the safe and responsible operation of their vehicle throughout the journey. Any route guidance or safety advisories we provide are intended as guidance and do not transfer responsibility for driving to DriveOffGrid.</p>
+                    <p>Optional activities and experiences are operated and managed independently by third-party service providers, and participation is at the participant’s own discretion and risk.</p>
+                    <p>Please read the full <a href="<?php echo url_path('terms-and-conditions'); ?>#third-party-activities" class="how-it-works-disclaimer-link">Third-Party Activities &amp; Experiences</a> and <a href="<?php echo url_path('terms-and-conditions'); ?>#self-drive-responsibility" class="how-it-works-disclaimer-link">Self-Drive &amp; Driving Responsibility</a> sections of our Terms &amp; Conditions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <?php include 'includes/footer.php'; ?>
 

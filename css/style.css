@@ -4028,3 +4028,36 @@ img[loading="lazy"].loaded {
 .home-destination-theme.destination-theme {
     white-space: normal;
 }
+
+/* ==========================================================================
+   Legal notices — self-drive / third-party activity disclaimers
+   ========================================================================== */
+
+.destination-terms-note {
+    margin-top: 1.5rem;
+    max-width: 70ch;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    opacity: 0.75;
+}
+
+.destination-terms-note a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.how-it-works-disclaimer .step-text p:last-child {
+    font-size: 0.9375rem;
+    opacity: 0.8;
+}
+
+.how-it-works-disclaimer-link {
+    color: inherit;
+    text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+    .destination-terms-note {
+        font-size: 0.8125rem;
+    }
+}

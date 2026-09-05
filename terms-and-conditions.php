@@ -19,6 +19,12 @@ include 'includes/header.php';
         font-weight: 700;
         color: #000000;
     }
+
+    .terms-updated {
+        font-size: 0.875rem;
+        opacity: 0.7;
+        margin-bottom: 1rem;
+    }
 </style>
 <div class="container terms-hero-container">
     <div class="terms-hero-content">
@@ -31,8 +37,10 @@ include 'includes/header.php';
     <div class="container">
         <div class="terms-content">
             <div class="terms-intro">
+                <p class="terms-updated">Last updated: 5 September 2026</p>
                 <p>Welcome to DriveOffGrid. By accessing or using this website, you agree to be bound by these Terms & Conditions. If you do not agree, please refrain from using the website.</p>
                 <p>These terms govern your use of the DriveOffGrid website and all content, information, and services provided through it.</p>
+                <p>These terms apply to your use of this website and, where indicated, to participation in DriveOffGrid journeys and experiences.</p>
             </div>
 
             <div class="terms-section">
@@ -69,18 +77,28 @@ include 'includes/header.php';
                 <p>Travel experiences, itineraries, and services are subject to external factors including weather, local regulations, and availability.</p>
             </div>
 
+            <div class="terms-section" id="third-party-activities">
+                <h2 class="terms-section-title">7. Third-Party Activities &amp; Experiences</h2>
+                <p>DriveOffGrid may offer or facilitate optional activities and experiences through independent third-party service providers. Participation in these activities is entirely optional and at the participant’s own discretion and risk. While DriveOffGrid may coordinate with and recommend trusted service providers, these activities are operated and managed independently by third parties. DriveOffGrid is not responsible or liable for any injury, loss, damage, delay, cancellation or other incident arising from participation in such activities, except to the extent such liability cannot be excluded under applicable law.</p>
+            </div>
+
+            <div class="terms-section" id="self-drive-responsibility">
+                <h2 class="terms-section-title">8. Self-Drive &amp; Driving Responsibility</h2>
+                <p>DriveOffGrid journeys are self-drive experiences, and each participant is solely responsible for the safe and responsible operation of their vehicle throughout the journey. Any route guidance, safety instructions or advisories provided by the DriveOffGrid team or expedition leader are intended as guidance and do not transfer responsibility for driving to DriveOffGrid. Participants are responsible for exercising their own judgement, maintaining appropriate speed and control, and complying with all applicable traffic laws and safety requirements. DriveOffGrid shall not be responsible or liable for any accident, injury, loss, damage, traffic violation or other consequence arising from a participant’s operation of their vehicle, including failure to follow safety instructions or driving in an unsafe manner, except to the extent such liability cannot be excluded under applicable law.</p>
+            </div>
+
             <div class="terms-section">
-                <h2 class="terms-section-title">7. Changes to Terms</h2>
+                <h2 class="terms-section-title">9. Changes to Terms</h2>
                 <p>DriveOffGrid reserves the right to modify these Terms & Conditions at any time without prior notice. Continued use of the website constitutes acceptance of the updated terms.</p>
             </div>
 
             <div class="terms-section">
-                <h2 class="terms-section-title">8. Governing Law</h2>
+                <h2 class="terms-section-title">10. Governing Law</h2>
                 <p>These Terms & Conditions shall be governed by and interpreted in accordance with the laws of India.</p>
             </div>
 
             <div class="terms-section">
-                <h2 class="terms-section-title">9. Contact</h2>
+                <h2 class="terms-section-title">11. Contact</h2>
                 <p>For any questions regarding these Terms & Conditions, please contact us at <a href="mailto:hello@driveoffgrid.com" class="terms-contact-link">hello@driveoffgrid.com</a></p>
             </div>
         </div>

@@ -19,6 +19,12 @@ include 'includes/header.php';
         font-weight: 700;
         color: #000000;
     }
+
+    .privacy-updated {
+        font-size: 0.875rem;
+        opacity: 0.7;
+        margin-bottom: 1rem;
+    }
 </style>
 <div class="container privacy-hero-container">
     <div class="privacy-hero-content">
@@ -32,6 +38,7 @@ include 'includes/header.php';
     <div class="container">
         <div class="privacy-content">
             <div class="privacy-intro">
+                <p class="privacy-updated">Last updated: 5 September 2026</p>
                 <p>At DriveOffGrid, your privacy matters to us. This Privacy Policy explains how we collect, use, store, and protect your personal information when you visit our website or submit an enquiry.</p>
             </div>
 

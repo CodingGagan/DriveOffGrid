@@ -1169,6 +1169,9 @@ include 'includes/header.php';
             ?>
             <a href="<?php echo url_path($memories_url); ?>" class="btn btn-memories">TAKE ME TO THE MEMORIES OF <?php echo $dest['name']; ?></a>
         </div>
+        <p class="destination-terms-note">
+            Journeys are self-drive and each participant is responsible for the operation of their vehicle. Optional activities are operated by independent third-party providers. Please read our <a href="<?php echo url_path('terms-and-conditions'); ?>#self-drive-responsibility">Terms &amp; Conditions</a> before booking.
+        </p>
     </div>
 </section>
 

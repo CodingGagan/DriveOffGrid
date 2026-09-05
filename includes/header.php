@@ -92,14 +92,14 @@ $current_page = isset($url_to_page[$request_uri]) ? $url_to_page[$request_uri] :
     <link rel="icon" href="<?php echo url_path('assets/web-app-manifest-512x512.png'); ?>" type="image/png" sizes="512x512">
 
     <!-- Preload Critical CSS -->
-    <link rel="preload" href="<?php echo url_path('css/style.css'); ?>?v=1.0" as="style">
+    <link rel="preload" href="<?php echo url_path('css/style.css'); ?>?v=1.1" as="style">
     
     <!-- Load Optimized Fonts -->
     <link rel="stylesheet" href="<?php echo url_path('fonts/inter/inter-optimized.css'); ?>">
     <link rel="stylesheet" href="<?php echo url_path('fonts/poppins/poppins-optimized.css'); ?>">
     
     <!-- Load CSS with version for cache busting (change version when CSS updates) -->
-    <link rel="stylesheet" href="<?php echo url_path('css/style.css'); ?>?v=1.0">
+    <link rel="stylesheet" href="<?php echo url_path('css/style.css'); ?>?v=1.1">
     <!-- Tiny Slider CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
     <?php if (isset($additional_css)): ?>
