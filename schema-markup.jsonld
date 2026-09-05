@@ -1,0 +1,25 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Drive Off Grid",
+  "url": "https://www.driveoffgrid.com/",
+  "logo": "https://www.driveoffgrid.com/assets/images/Logo/DoG%20Logo%20Final%2022nd%20Jan%202024%201.png",
+  "alternateName": "Drive Off Grid",
+  "sameAs": [
+    "https://www.linkedin.com/company/driveoffgrid/?originalSubdomain=in",
+    "https://www.instagram.com/driveoffgrid?igsh=dTd5cXc3eWRzbTVh",
+    "https://www.facebook.com/people/Driveoffgrid/61562935980455/"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+91-9323167788",
+      "contactType": "customer service",
+      "email": "hello@driveoffgrid.com",
+      "areaServed": "IN",
+      "availableLanguage": "en"
+    }
+  ]
+}
+</script>
