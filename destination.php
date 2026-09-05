@@ -1169,9 +1169,15 @@ include 'includes/header.php';
             ?>
             <a href="<?php echo url_path($memories_url); ?>" class="btn btn-memories">TAKE ME TO THE MEMORIES OF <?php echo $dest['name']; ?></a>
         </div>
-        <p class="destination-terms-note">
-            Journeys are self-drive and each participant is responsible for the operation of their vehicle. Optional activities are operated by independent third-party providers. Please read our <a href="<?php echo url_path('terms-and-conditions'); ?>#self-drive-responsibility">Terms &amp; Conditions</a> before booking.
-        </p>
+        <div class="destination-disclaimer">
+            <h2 class="destination-disclaimer-title">Important Disclaimer</h2>
+
+            <h3 class="destination-disclaimer-heading">Third-Party Activities &amp; Experiences</h3>
+            <p>DriveOffGrid may offer or facilitate optional activities and experiences through independent third-party service providers. Participation in these activities is entirely optional and at the participant’s own discretion and risk. While DriveOffGrid may coordinate with and recommend trusted service providers, these activities are operated and managed independently by third parties. DriveOffGrid is not responsible or liable for any injury, loss, damage, delay, cancellation or other incident arising from participation in such activities, except to the extent such liability cannot be excluded under applicable law.</p>
+
+            <h3 class="destination-disclaimer-heading">Self-Drive &amp; Driving Responsibility</h3>
+            <p>DriveOffGrid journeys are self-drive experiences, and each participant is solely responsible for the safe and responsible operation of their vehicle throughout the journey. Any route guidance, safety instructions or advisories provided by the DriveOffGrid team or expedition leader are intended as guidance and do not transfer responsibility for driving to DriveOffGrid. Participants are responsible for exercising their own judgement, maintaining appropriate speed and control, and complying with all applicable traffic laws and safety requirements. DriveOffGrid shall not be responsible or liable for any accident, injury, loss, damage, traffic violation or other consequence arising from a participant’s operation of their vehicle, including failure to follow safety instructions or driving in an unsafe manner, except to the extent such liability cannot be excluded under applicable law.</p>
+        </div>
     </div>
 </section>
 

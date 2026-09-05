@@ -78,11 +78,13 @@ include 'includes/header.php';
     <section class="how-it-works-step step-light how-it-works-disclaimer">
         <div class="container">
             <div class="step-content">
-                <h2 class="step-title">IMPORTANT DISCLAIMER</h2>
+                <h2 class="step-title">Important Disclaimer</h2>
                 <div class="step-text">
-                    <p>DriveOffGrid journeys are self-drive experiences. Each participant is solely responsible for the safe and responsible operation of their vehicle throughout the journey. Any route guidance or safety advisories we provide are intended as guidance and do not transfer responsibility for driving to DriveOffGrid.</p>
-                    <p>Optional activities and experiences are operated and managed independently by third-party service providers, and participation is at the participant’s own discretion and risk.</p>
-                    <p>Please read the full <a href="<?php echo url_path('terms-and-conditions'); ?>#third-party-activities" class="how-it-works-disclaimer-link">Third-Party Activities &amp; Experiences</a> and <a href="<?php echo url_path('terms-and-conditions'); ?>#self-drive-responsibility" class="how-it-works-disclaimer-link">Self-Drive &amp; Driving Responsibility</a> sections of our Terms &amp; Conditions.</p>
+                    <h3 class="disclaimer-heading">Third-Party Activities &amp; Experiences</h3>
+                    <p>DriveOffGrid may offer or facilitate optional activities and experiences through independent third-party service providers. Participation in these activities is entirely optional and at the participant’s own discretion and risk. While DriveOffGrid may coordinate with and recommend trusted service providers, these activities are operated and managed independently by third parties. DriveOffGrid is not responsible or liable for any injury, loss, damage, delay, cancellation or other incident arising from participation in such activities, except to the extent such liability cannot be excluded under applicable law.</p>
+
+                    <h3 class="disclaimer-heading">Self-Drive &amp; Driving Responsibility</h3>
+                    <p>DriveOffGrid journeys are self-drive experiences, and each participant is solely responsible for the safe and responsible operation of their vehicle throughout the journey. Any route guidance, safety instructions or advisories provided by the DriveOffGrid team or expedition leader are intended as guidance and do not transfer responsibility for driving to DriveOffGrid. Participants are responsible for exercising their own judgement, maintaining appropriate speed and control, and complying with all applicable traffic laws and safety requirements. DriveOffGrid shall not be responsible or liable for any accident, injury, loss, damage, traffic violation or other consequence arising from a participant’s operation of their vehicle, including failure to follow safety instructions or driving in an unsafe manner, except to the extent such liability cannot be excluded under applicable law.</p>
                 </div>
             </div>
         </div>
