@@ -1152,7 +1152,7 @@ include 'includes/header.php';
         </div>
 
         <!-- Call-to-Action Buttons -->
-        <div class="cta-buttons">
+        <div class="cta-buttons" id="book-your-trip">
             <a href="<?php echo url_path('contact-us'); ?>" class="btn btn-book-trip">BOOK YOUR TRIP TO <?php echo $dest['name']; ?> NOW</a>
             <?php
             // Generate memories URL based on destination
