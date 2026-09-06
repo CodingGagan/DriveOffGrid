@@ -219,6 +219,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Save individual field to database
     async function saveField(fieldName, fieldValue) {
+        // Skip while a trip is being pre-selected from ?trip= - the visitor hasn't
+        // entered anything yet, and the value is still sent on real form submission.
+        if (suppressFieldSave) return;
         try {
             const apiUrl = getApiUrl();
             console.log('Fetching to URL:', apiUrl);
@@ -277,6 +280,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedCountries = []; // Track multiple selected countries {code, name}
     let selectedCountryPolygons = {}; // Track polygon objects for selected countries
     let selectedTrips = []; // Track selected trip values (e.g., 'ireland', 'ireland-scotland') separately from country codes
+    let suppressFieldSave = false; // true while pre-selecting, so landing on the page doesn't write a draft row
+    let preselectApplied = false;  // ?trip= is only ever applied once
     
     // Destination to country code mapping with coordinates
     const destinations = {
@@ -287,7 +292,15 @@ document.addEventListener('DOMContentLoaded', function() {
         'scotland': { countryCode: 'GB', name: 'Scotland Trip', lat: 55.9533, lon: -3.1883 },
         'srilanka': { countryCode: 'LK', name: 'Sri Lanka Trip', lat: 7.8731, lon: 80.7718 },
         'uae-oman': { countryCode: 'AE', name: 'UAE & Oman Trip', lat: 24.4539, lon: 54.3773 },
-        'ireland-scotland': { countryCode: 'IE', name: 'Ireland & Scotland Trip', lat: 54.5, lon: -5.5 }
+        'ireland-scotland': { countryCode: 'IE', name: 'Ireland & Scotland Trip', lat: 54.5, lon: -5.5 },
+        // NOTE: 'russia-artic' and 'russia-luxe' are deliberately absent. Both are the
+        // same country (RU), and this map is keyed by country, so adding them makes
+        // selecting either trip select both. They stay unhighlighted until the globe
+        // can distinguish two trips in one country.
+        'mongolia': { countryCode: 'MN', name: 'Mongolia Trip', lat: 46.8625, lon: 103.8467 },
+        // Tibet is not a separate country on the map, so it highlights China (CN).
+        'tibet': { countryCode: 'CN', name: 'Tibet Trip', lat: 31.6927, lon: 88.7879 },
+        'iceland': { countryCode: 'IS', name: 'Iceland Trip', lat: 64.9631, lon: -19.0208 }
     };
     
     // Country code to country name mapping (ISO 3166-1 alpha-2)
@@ -1212,6 +1225,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Update globe marker based on selected trip from dropdown
+    // Pre-select a trip when arriving from a destination page, e.g. /contact-us?trip=ireland
+    function applyPreselectedTrip() {
+        if (preselectApplied) return;
+        preselectApplied = true;
+
+        let requested = null;
+        try {
+            requested = new URLSearchParams(window.location.search).get('trip');
+        } catch (e) {
+            return;
+        }
+        // Slugs are lowercase/hyphen only; anything else is ignored rather than
+        // interpolated into a selector.
+        if (!requested || !/^[a-z-]+$/.test(requested)) return;
+
+        const option = document.querySelector('.dropdown-option[data-value="' + requested + '"]');
+        if (!option || option.classList.contains('selected')) return;
+
+        // Reuse the normal click flow so the globe highlight, the chips and the
+        // dropdown label all stay in sync with a manual selection.
+        suppressFieldSave = true;
+        try {
+            option.click();
+        } finally {
+            suppressFieldSave = false;
+        }
+    }
+
     function updateMapMarker(tripValue) {
         // Get destination data
         const destination = destinations[tripValue];
@@ -1444,7 +1485,10 @@ document.addEventListener('DOMContentLoaded', function() {
             'uae-oman': 'UAE & Oman',
             'ireland-scotland': 'Ireland & Scotland',
             'russia-artic': 'Russia Arctic',
-            'russia-luxe': 'Russia Luxe'
+            'russia-luxe': 'Russia Luxe',
+            'mongolia': 'Mongolia',
+            'tibet': 'Tibet',
+            'iceland': 'Iceland'
         };
         
         // Display selected trips (excluding "other")
@@ -2501,18 +2545,21 @@ document.addEventListener('DOMContentLoaded', function() {
             'uae-oman': 'UAE & Oman',
             'ireland-scotland': 'Ireland & Scotland',
             'russia-artic': 'Russia Arctic',
-            'russia-luxe': 'Russia Luxe'
+            'russia-luxe': 'Russia Luxe',
+            'mongolia': 'Mongolia',
+            'tibet': 'Tibet',
+            'iceland': 'Iceland'
         };
         
         // Function to generate gallery URL for a trip
         function getTripGalleryUrl(tripValue) {
             // Use urlPath function if available (from contact_us.php), otherwise construct manually
             if (typeof window.urlPath === 'function') {
-                return window.urlPath(tripValue + '/memories');
+                return window.urlPath('galleries/' + tripValue);
             } else {
                 // Fallback: construct URL manually
                 const base = window.BASE_PATH || '';
-                return (base ? base + '/' : '/') + tripValue + '/memories';
+                return (base ? base + '/' : '/') + 'galleries/' + tripValue;
             }
         }
         
@@ -2769,6 +2816,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
     
+    // Apply ?trip= from a destination page's "Book your trip" button. Waits for the
+    // globe's polygons so the country highlight lands too, then gives up and selects
+    // in the dropdown anyway if the map never loads.
+    (function waitForMapThenPreselect(attempts) {
+        if (preselectApplied) return;
+        let ready = false;
+        try {
+            ready = !!(polygonSeries && polygonSeries.getDataItemById && polygonSeries.getDataItemById('IE'));
+        } catch (e) {
+            ready = false;
+        }
+        if (ready || attempts <= 0) {
+            applyPreselectedTrip();
+            return;
+        }
+        setTimeout(function() { waitForMapThenPreselect(attempts - 1); }, 200);
+    })(25);
+
     // Expose functions for debugging (remove in production)
     window.debugGlobe = {
         getSelectedCountries: function() {

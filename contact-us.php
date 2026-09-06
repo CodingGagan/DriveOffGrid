@@ -272,6 +272,9 @@ include 'includes/header.php';
                                     <!-- <div class="dropdown-option" data-value="ireland-scotland" data-location="[-5.5, 54.5]" data-name="Ireland & Scotland">Ireland & Scotland</div> -->
                                     <div class="dropdown-option" data-value="russia-artic" data-location="[37.6173, 55.7558]" data-name="Russia Arctic">Russia Arctic</div>
                                     <div class="dropdown-option" data-value="russia-luxe" data-location="[37.6173, 55.7558]" data-name="Russia Luxe">Russia Luxe</div>
+                                    <div class="dropdown-option" data-value="mongolia" data-location="[103.8467, 46.8625]" data-name="Mongolia">Mongolia</div>
+                                    <div class="dropdown-option" data-value="tibet" data-location="[88.7879, 31.6927]" data-name="Tibet">Tibet</div>
+                                    <div class="dropdown-option" data-value="iceland" data-location="[-19.0208, 64.9631]" data-name="Iceland">Iceland</div>
                                     <div class="dropdown-option" data-value="other" data-location="[0, 0]" data-name="Other">Other</div>
                                 </div>
                             </div>
@@ -432,6 +435,6 @@ include 'includes/header.php';
     <script src="js/vendor/amcharts/maps.js"></script>
     <script src="js/vendor/amcharts/Animated.js"></script>
     <script src="js/vendor/amcharts/worldIndiaLow.js"></script>
-    <script src="js/travel-enquire-script.js" defer></script>
+    <script src="js/travel-enquire-script.js?v=1.1" defer></script>
 <?php include 'includes/footer.php'; ?>
 

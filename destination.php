@@ -1152,21 +1152,23 @@ include 'includes/header.php';
         </div>
 
         <!-- Call-to-Action Buttons -->
+        <?php
+        // Enquiry-form dropdown values use hyphens; destination keys use underscores.
+        $trip_slug_map = [
+            'uae_and_oman'         => 'uae-oman',
+            'ireland_scotland'     => 'ireland-scotland',
+            'russia_artic'         => 'russia-artic',
+            'russia_luxe_corridor' => 'russia-luxe',
+        ];
+        // Resolve against the known destination list so a bogus ?dest= can't reach the markup.
+        $validDestination = isset($destinations[$destination]) ? $destination : 'poland';
+        $trip_slug = isset($trip_slug_map[$validDestination]) ? $trip_slug_map[$validDestination] : $validDestination;
+        // /galleries/<slug> resolves for every destination; "<slug>/memories" only has
+        // rewrite rules for some, so Mongolia/Tibet/Iceland 404 on that form.
+        $memories_url = 'galleries/' . $trip_slug;
+        ?>
         <div class="cta-buttons" id="book-your-trip">
-            <a href="<?php echo url_path('contact-us'); ?>" class="btn btn-book-trip">BOOK YOUR TRIP TO <?php echo $dest['name']; ?> NOW</a>
-            <?php
-            // Generate memories URL based on destination
-            $memories_url = '';
-            if ($destination == 'uae_and_oman') {
-                $memories_url = 'uae-oman/memories';
-            } elseif ($destination == 'russia_artic') {
-                $memories_url = 'russia-artic/memories';
-            } elseif ($destination == 'russia_luxe_corridor') {
-                $memories_url = 'russia-luxe/memories';
-            } else {
-                $memories_url = strtolower($destination) . '/memories';
-            }
-            ?>
+            <a href="<?php echo url_path('contact-us?trip=' . urlencode($trip_slug)); ?>" class="btn btn-book-trip">BOOK YOUR TRIP TO <?php echo $dest['name']; ?> NOW</a>
             <a href="<?php echo url_path($memories_url); ?>" class="btn btn-memories">TAKE ME TO THE MEMORIES OF <?php echo $dest['name']; ?></a>
         </div>
         <div class="destination-disclaimer">
