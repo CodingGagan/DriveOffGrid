@@ -965,7 +965,7 @@ $destinations = [
             'distance' => ['icon' => '../assets/images/icons/distance.png', 'title' => 'DISTANCE', 'description' => '~ 1,900 kms'],
             'vehicle' => ['icon' => '../assets/images/icons/vechicle.png', 'title' => 'VEHICLE', 'description' => 'SUV or 4x4 Expedition Vehicle'],
             'terrain' => ['icon' => '../assets/images/icons/terrain.png', 'title' => 'TERRAIN', 'description' => 'Glaciers, Lava Fields, Waterfalls & Black-Sand Beaches'],
-            'best_months' => ['icon' => '../assets/images/icons/duration.png', 'title' => 'BEST MONTHS TO TRAVEL', 'description' => 'Jun to Sep'],
+            'best_months' => ['icon' => '../assets/images/icons/duration.png', 'title' => 'BEST MONTHS TO TRAVEL', 'description' => 'May to Sep'],
             'accommodation' => ['icon' => '../assets/images/icons/accomodation.png', 'title' => 'ACCOMMODATION', 'description' => 'Hotels']
         ],
         'itinerary' => [

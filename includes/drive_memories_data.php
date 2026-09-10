@@ -72,7 +72,7 @@ $drive_ideas = [
     ],
     'mongolia' => [
         'name' => 'MONGOLIA',
-        'theme' => 'Echoes of Time',
+        'theme' => 'Steppe & Sky',
         'hero_image' => 'assets/images/locations/mongolia/homepage/mongolia.png',
         'url' => 'mongolia',
         'content' => 'Ancient capitals, endless steppes, golden dunes, and nomadic soul - a timeless road trip through the wild heart of Mongolia.'
